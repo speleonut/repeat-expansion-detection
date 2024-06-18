@@ -152,7 +152,7 @@ fi
 
 # Start the script
 $expHunterPath/ExpansionHunter \
---reads ${bamFile[$SLURM_ARRAY_TASK_ID]}) \
+--reads ${bamFile[$SLURM_ARRAY_TASK_ID]} \
 --reference $genomeBuild \
 --variant-catalog $repeatSpecs \
 --output-prefix $outDir/${baseBamFile[$SLURM_ARRAY_TASK_ID]}
