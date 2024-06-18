@@ -135,7 +135,7 @@ for mod in "${modList[@]}"; do
     module load $mod
 done
 
-sampleID = $( samtools samples ${bamFile[SLURM_ARRAY_TASK_ID]} | cut -f1 )
+sampleID=$(samtools samples ${bamFile[SLURM_ARRAY_TASK_ID]} | cut -f1)
 
 if [ -z "$genomeBuild" ]; then # If genome not specified then see if it is possible to find the reference.  This will also match a variant catalog if a custom one was not specified.
     genomeSize=$(samtools view -H ${bamFile[SLURM_ARRAY_TASK_ID]} | grep @SQ | cut -f3 | cut -f2 -d":" | awk '{s+=$1} END {printf "%.0f\n", s}' -)
