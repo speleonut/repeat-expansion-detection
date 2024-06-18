@@ -127,13 +127,15 @@ if [ -z "$inputFile" ]; then # If no input file specified then do not proceed
         echo "#ERROR: You need to give me a text file with a list of BAM or CRAM files including the full path to each file."
         exit 1
 fi
+
 readarray -t bamFile < $inputFile
-baseBamFile=$( basename ${bamFile[SLURM_ARRAY_TASK_ID]} )
 
 # Load modules
 for mod in "${modList[@]}"; do
     module load $mod
 done
+
+sampleID = $( samtools samples ${bamFile[SLURM_ARRAY_TASK_ID]} | cut -f1 )
 
 if [ -z "$genomeBuild" ]; then # If genome not specified then see if it is possible to find the reference.  This will also match a variant catalog if a custom one was not specified.
     genomeSize=$(samtools view -H ${bamFile[SLURM_ARRAY_TASK_ID]} | grep @SQ | cut -f3 | cut -f2 -d":" | awk '{s+=$1} END {printf "%.0f\n", s}' -)
@@ -141,7 +143,7 @@ if [ -z "$genomeBuild" ]; then # If genome not specified then see if it is possi
 fi
 
 if [ -z "$outDir" ]; then # If no output directory then use a default directory
-        outDir=$userDir/expansionHunter/output
+        outDir=$userDir/expansionHunter/output/$sampleID
         echo "## INFO: Using $outDir as the output directory"
 fi
 
@@ -155,4 +157,4 @@ $expHunterPath/ExpansionHunter \
 --reads ${bamFile[$SLURM_ARRAY_TASK_ID]} \
 --reference $genomeBuild \
 --variant-catalog $repeatSpecs \
---output-prefix $outDir/${baseBamFile[$SLURM_ARRAY_TASK_ID]}
+--output-prefix $outDir/$sampleID
