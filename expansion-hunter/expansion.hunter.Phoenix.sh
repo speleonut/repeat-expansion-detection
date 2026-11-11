@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH -J ExpHunter
-#SBATCH -o /hpcfs/users/%u/log/ExpHunt.slurm-%j.out
+#SBATCH -o /scratchdata1/users/%u/log/ExpHunt.slurm-%j.out
 
 #SBATCH -p icelake,a100cpu
 #SBATCH -N 1
@@ -14,9 +14,9 @@
 #SBATCH --mail-type=FAIL
 #SBATCH --mail-user=mark.corbett@adelaide.edu.au
 
-neuroDir=/hpcfs/groups/phoenix-hpc-neurogenetics
+neuroDir=/scratchdata1/groups/phoenix-hpc-neurogenetics
 refDir=$neuroDir/RefSeq
-userDir=/hpcfs/users/${USER}
+userDir=/scratchdata1/users/${USER}
 expHunterPath=$neuroDir/executables/ExpansionHunter_latest/bin
 
 modList=("SAMtools/1.22.1-GCC-14.3.0")
