@@ -19,7 +19,7 @@ refDir=$neuroDir/RefSeq
 userDir=/hpcfs/users/${USER}
 expHunterPath=$neuroDir/executables/ExpansionHunter_latest/bin
 
-modList=("SAMtools/1.17-GCC-11.2.0")
+modList=("SAMtools/1.22.1-GCC-14.3.0")
 
 usage()
 {
